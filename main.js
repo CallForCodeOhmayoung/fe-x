@@ -105,7 +105,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const dragend = async () => {
             clearMarker();
             const center = map.getCenter();
-            const {data} = await axios.get('http://localhost:3000/managements/explore', {
+            const {data} = await axios.get('http' +
+                's://for-ibm.hax0r.info/managements/explore', {
                 headers: {
                     Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZU51bWJlciI6IjAxMDMwNjMzMDcyIiwiaWF0IjoxNTkxNjk4ODA1LCJleHAiOjE1OTE5NTgwMDV9.lZ98ATwa-g8H5zftxHVjY7dbtBiQpVnJHvjfwwA8dGg'
                 },
