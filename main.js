@@ -22,7 +22,7 @@ const autocomplete = (suggestions) => {
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const {coords} = await getLocation();
-        const searchForm = document.getElementById('serach');
+        const searchForm = document.getElementById('search');
         const container = document.getElementById('map');
         const loadingContainer = document.getElementById('loading');
         const queryContainer = document.querySelector('input[name="keyword"]');
