@@ -22,11 +22,12 @@ const autocomplete = (suggestions) => {
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const {coords} = await getLocation();
-        console.log('coords', coords)
         const searchForm = document.getElementById('serach');
         const container = document.getElementById('map');
         const loadingContainer = document.getElementById('loading');
         const queryContainer = document.querySelector('input[name="keyword"]');
+        const infowindow = new kakao.maps.InfoWindow({zIndex: 1});
+
 
         container.style.display = 'block';
         loadingContainer.style.display = 'none';
@@ -37,20 +38,37 @@ document.addEventListener('DOMContentLoaded', async () => {
             level: 5
         };
 
+        const markers = [];
         const map = new kakao.maps.Map(container, options);
         const ps = new kakao.maps.services.Places();
 
         const displayMarker = (place) => {
-            var marker = new kakao.maps.Marker({
+            const marker = new kakao.maps.Marker({
                 map: map,
                 position: new kakao.maps.LatLng(place.y, place.x)
             });
 
             kakao.maps.event.addListener(marker, 'click', function() {
-                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                infowindow.setContent(
+                    `<div style="padding:10px;font-size:12px;">
+                        현재 상태: ${place.status} (${place.quotesPercent}%)
+                    </div>
+                    <div style="padding:10px;font-size:12px;">
+                        현재 방문 인원: ${place.total}
+                    </div>
+                    `
+                );
                 infowindow.open(map, marker);
             });
+
+            markers.push(marker);
         };
+
+        const clearMarker = () => {
+            for (let i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+        }
 
         const placesSearchCB = (data, status, pagination) => {
             if (status === kakao.maps.services.Status.OK) {
@@ -69,6 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             e.preventDefault();
             const query = queryContainer.value;
             if (query.length === 0) {
+                clearMarker();
                 setTimeout(() => {
                     document.getElementById('autocomplete').innerHTML = '';
                     document.getElementById('autocomplete').style.display = 'none';
@@ -83,11 +102,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         });
 
-        kakao.maps.event.addListener(map, 'dragend', async () => {
+        const dragend = async () => {
+            clearMarker();
             const center = map.getCenter();
-
-
-            await axios.get('http://localhost:3000/managements/explore', {
+            const {data} = await axios.get('http://localhost:3000/managements/explore', {
                 headers: {
                     Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZU51bWJlciI6IjAxMDMwNjMzMDcyIiwiaWF0IjoxNTkxNjk4ODA1LCJleHAiOjE1OTE5NTgwMDV9.lZ98ATwa-g8H5zftxHVjY7dbtBiQpVnJHvjfwwA8dGg'
                 },
@@ -95,7 +113,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                     latitude: center.getLat(),
                     longitude: center.getLng(),
                 }
-            })
+            });
+            const points = data;
+
+            for (let i = 0; i < points.length; i++) {
+                displayMarker({
+                    x: points[i].longitude,
+                    y: points[i].latitude,
+                    status: points[i].status,
+                    quotesPercent: points[i].quotesPercent,
+                    total: points[i].total
+                })
+            }
+        }
+
+        dragend();
+        kakao.maps.event.addListener(map, 'dragend', async () => {
+            dragend();
         });
 
     } catch (error) {
