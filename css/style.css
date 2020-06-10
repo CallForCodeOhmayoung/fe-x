@@ -38,7 +38,7 @@ h2{text-align:center; margin-bottom:50px; font-size:30px;}
 .search-group input{position:relative; float:left; border:1px solid #f99900; border-radius:5px; height:55px; width:calc(100% - 40px);}
 .smenu-btn{display:block; width:30px; height:55px; float:right; background:url(../img/icon_menu.png) no-repeat 50% 50%; background-size:25px 20px; text-indent:-9999px;}
 
-.smenu-area .bg{opacity:0; z-index:-1; position:fixed; top:0; right:0; bottom:0; left:0; background:rgba(0, 0, 0, 0.2); transition:all .3s;}
+.smenu-area .bg{opacity:0; display: none; z-index:-1; position:fixed; top:0; right:0; bottom:0; left:0; background:rgba(0, 0, 0, 0.2); transition:all .3s;}
 .smenu-area > .smenu-area-wrap{position:fixed; top:0; right:-200px; bottom:0; width:200px; height:100%; background:#d83f09; transition:all .3s; z-index:10;}
 .smenu-area .user-info{position:relative; padding:20px 0;}
 .smenu-area .user-info:after{content:''; display:block; position:absolute; width:100%; height:5px; background:#fff; border-top:1px solid #ddd; bottom:0; left:50%; transform:translateX(-50%);}
@@ -47,7 +47,7 @@ h2{text-align:center; margin-bottom:50px; font-size:30px;}
 .smenu-area .user-info .user-name{display:block; color:#fff; margin-top:20px; text-align:center;}
 .smenu-area .user-info .user-name span{font-size:20px; font-weight:bold;}
 
-.smenu-area.on .bg{opacity:1; z-index:5;}
+.smenu-area.on .bg{opacity:1; display: block; z-index:5;}
 .smenu-area.on > .smenu-area-wrap{right:0; overflow-y:auto;}
 
 .smenu-area ul{padding:30px 20px;}

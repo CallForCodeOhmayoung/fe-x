@@ -15,7 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
 	<script>
-		var mytoken = "";
+		var myToken = "";
 		
 		$(document).ready(function(){
 			$('#signin').click(function(){
@@ -33,9 +33,9 @@
 					success: function(data) {
 						alert("로그인 성공");
 						console.log(data);
-						mytoken = data.token;
+						myToken = data.token;
 						$('#signinoutput').val(data.token);
-						console.log("mytoken is " + mytoken);
+						console.log("myToken is " + myToken);
 						window.location.href = "../index.html";
 					}
 				});
