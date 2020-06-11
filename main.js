@@ -1,5 +1,4 @@
 import axios from 'axios';
-import page from 'page';
 
 const getLocation = () => {
     if (navigator.geolocation) {
@@ -22,9 +21,6 @@ const autocomplete = (suggestions) => {
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        page('', () => {
-            console.log('do');
-        })
         const {coords} = await getLocation();
         const searchForm = document.getElementById('search');
         const container = document.getElementById('map');
