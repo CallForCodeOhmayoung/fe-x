@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const container = document.getElementById('map');
         const loadingContainer = document.getElementById('loading');
         const queryContainer = document.querySelector('input[name="keyword"]');
-        const infowindow = new kakao.maps.InfoWindow({zIndex: 1});
+        const infowindow = new kakao.maps.InfoWindow({zIndex: 1, removable: true});
 
 
         container.style.display = 'block';
