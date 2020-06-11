@@ -1,4 +1,5 @@
 import axios from 'axios';
+import page from 'page';
 
 const getLocation = () => {
     if (navigator.geolocation) {
@@ -21,6 +22,9 @@ const autocomplete = (suggestions) => {
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
+        page('', () => {
+            console.log('do');
+        })
         const {coords} = await getLocation();
         const searchForm = document.getElementById('search');
         const container = document.getElementById('map');
@@ -40,6 +44,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const markers = [];
         const map = new kakao.maps.Map(container, options);
+
+        map.setMaxLevel(10);
+
         const ps = new kakao.maps.services.Places();
 
         const displayMarker = (place) => {
