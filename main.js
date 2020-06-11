@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const markers = [];
         const map = new kakao.maps.Map(container, options);
 
-        map.setMaxLevel(10);
+        map.setMaxLevel(5);
 
         const ps = new kakao.maps.services.Places();
 
