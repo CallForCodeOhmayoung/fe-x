@@ -8,7 +8,7 @@
     
     <link rel="stylesheet" type="text/css" href="./css/common.css" />
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
-    
+
     <style type="text/scss">
         html, body, #loading {
             margin: 0;
@@ -38,8 +38,7 @@
             }
         }
 
-        #search {
-            
+        #search {  
             width: 600px;
             z-index: 99999;
             position: relative;
@@ -51,7 +50,6 @@
             background-color: #fff;
             border: 1px solid rgba(0,0,0,0.15);
             box-shadow: 0 2px 3px rgba(0,0,0,0.06);
-            padding-left: .75em;
             
             input {
                 appearance: none;
@@ -63,7 +61,7 @@
                 background: none;
                 outline: none;
                 border: none;
-                padding: 0;
+                padding-left: .75em;
                 height: 2.545455em;
                 z-index: 1;
                 position: relative;
@@ -82,6 +80,26 @@
         #loading {
             position: absolute;
             top: 0;
+        }
+
+        .pop-up {
+            z-index: 99999;
+            display: block;
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            color: white;
+        }
+
+        .pop-up .bg {
+            opacity: 0.5;
+            position: fixed;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: black;
+            transition: all .3s;
+        }
+
+        .pop-down {
+            display: none;
         }
 
         $green: #008744;
@@ -180,35 +198,117 @@
                 }
             }
         }
+
+        input::placeholder {
+			text-align: center;
+		}
     </style>
 </head>
 <body>
     <div id="map" style="width:100%; height:100%; display: none">
-        <form id="search">
-            <input name="keyword" autocomplete="off" placeholder="어느 곳의 혼잡도가 궁금하세요 ?" />
-            <ul id="autocomplete"></ul>
-            <div class="header-area">
-                <div class="search-group">
-                <a href="javascript:;" class="smenu-btn">전체메뉴</a>
-                <div class="smenu-area">
-                    <div class="smenu-area-wrap">
-                        <div class="user-info">
-                            <p class="user-img">
-                                <img src="./img/@user.png">
-                            </p>
-                            <a href="javascript:;" class="user-name"><span>홍길동</span> 님</a>
+
+        <!-- search and side bar section -->
+        <section class="pop-down" id="search-sidebar">
+            <form id="search">
+                <input name="keyword" autocomplete="off" placeholder="어느 곳의 혼잡도가 궁금하세요 ?" />
+                <ul id="autocomplete"></ul>
+                <div class="header-area">
+                    <div class="search-group">
+                    <a href="javascript:;" class="smenu-btn">햄버거 메뉴</a>
+                    <div class="smenu-area">
+                        <div class="smenu-area-wrap">
+                            <div class="user-info">
+                                <p class="user-img">
+                                    <img src="./img/@user.png">
+                                </p>
+                                <a href="javascript:;" class="user-name"><span>홍길동</span> 님</a>
+                            </div>
+                            <ul>
+                                <li><a href="javascript:;" class="menu-qr">MY<br>QR CODE</a></li>
+                                <li><a href="javascript:;" class="menu-visited">방문장소</a></li>
+                                <li><a href="javascript:;" class="menu-save">저장장소</a></li>
+                                <li><a href="javascript:;" class="menu-logout">로그아웃</a></li>
+                            </ul>
                         </div>
-                        <ul>
-                            <li><a href="javascript:;" class="menu-qr">MY<br>QR CODE</a></li>
-                            <li><a href="javascript:;" class="menu-visited">방문장소</a></li>
-                            <li><a href="javascript:;" class="menu-save">저장장소</a></li>
-                            <li><a href="javascript:;" class="menu-logout">로그아웃</a></li>
-                        </ul>
+                        <div class="bg"></div>
                     </div>
-                    <div class="bg"></div>
+                </div>
+            </form>
+        </section>
+
+        <!-- login section -->
+        <section class="pop-up" id="login">
+            <div class="bg"></div>
+            <div class="login wrap">
+                <div class="logo"><img src="./img/logo.png"></div>
+                <div style="padding: 20px;"></div>
+                <div class="form-group">
+                    <span><b>PHONE NUMBER</b></span>
+                    <input type="text" placeholder="Enter Your Phone Number" id="phoneNumber">
+                </div>
+                <div class="form-group">
+                    <span><b>PASSWORD</b></span>
+                    <input type="password" placeholder="Enter Your Password" id="password">
+                </div>
+                <!-- <a href="findPw.html" class="find-info">Forget Your Password ?</a> -->
+                <button class="btn-login" id="signin">S U B M I T</button>
+                <div class="member-join">
+                    <a href="javascript:;" class="find-info" id="call-signup">No Account ? &nbsp;&nbsp;&nbsp; Sign Up Here!</a>
                 </div>
             </div>
-        </form>
+        </section>
+
+        <!-- sign up section -->
+        <section class="pop-down" id="signup">
+            <div class="bg"></div>
+            <div class="login wrap">
+                <div class="logo"><img src="./img/logo.png"></div>
+                <div style="padding: 20px;"></div>
+                <h2>SIGN UP</h2>
+                <div class="tbl"> 
+                    <!--
+                    <div class="tbl-row">
+                        <p class="tbl-th">이름</p>
+                        <p class="tbl-td"><input type="text" placeholder="내용을 입력하세요"></p>
+                    </div>
+                    <div class="tbl-row">
+                        <p class="tbl-th">생년월일</p>
+                        <p class="tbl-td"><input type="text" placeholder="내용을 입력하세요"></p>
+                    </div>
+                    <div class="tbl-row">
+                        <p class="tbl-th">아이디</p>
+                        <p class="tbl-td"><input type="text" placeholder="내용을 입력하세요"></p>
+                    </div>
+                    -->
+                    <div class="tbl-row">
+                        <p class="tbl-th"><b>PHONE NUMBER</b></p>
+                        <p class="tbl-td">
+                            <input type="text" placeholder="Enter Your Phone Number" id="phoneNumber">
+                            <!--
+                            <span class="input-btn"><button class="btn">전송</button></span>
+                            -->
+                        </p>
+                    </div>
+                    <!--
+                    <div class="tbl-row">
+                        <p class="tbl-th">인증 번호</p>
+                        <p class="tbl-td"><span class="input-btn"><input type="text" placeholder="내용을 입력하세요"><button class="btn">확인</button></span></p>
+                    </div>
+                    -->
+                    <div class="tbl-row">
+                        <p class="tbl-th"><b>PASSWORD</b></p>
+                        <p class="tbl-td">
+                            <input type="password" placeholder="Enter Your Password" id="password">
+                        </p>
+                    </div>
+                </div>
+                <div class="btn-area">
+                    <p><button class="btn" onClick="location.href='login.html'">CANCEL</button></p>
+                    <p><button class="btn" id="signup-submit">SUBMIT</button></p>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <section id="loading">
@@ -228,7 +328,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script type="text/javascript" src="./js/custom.js"></script>
-            
+
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=27bbbd35600aeb768e05069ae4a8d27f&libraries=services"></script>
     <script src="main.js"></script>
 </body>

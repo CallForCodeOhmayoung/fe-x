@@ -11,10 +11,10 @@ h2{text-align:center; margin-bottom:50px; font-size:30px;}
 .login .form-group span{display:block; margin-bottom:5px;}
  input{width:100%; height:45px; padding:0 10px; font-size:16px; border:1px solid #ddd; box-sizing:border-box;}
 .login .find-info{display:block; margin-top:40px; text-align:center;}
-.login .btn-login{display:block; width:100%; height:60px; margin-top:30px; background:#444; color:#fff;}
+.login .btn-login{display:block; width:100%; height:60px; margin-top:30px; background:#444; color:#fff; border-radius: 13px;}
 .login .member-join{display:table; table-layout:fixed; width:100%; margin-top:30px; }
 .login .member-join > a{display:table-cell; vertical-align:middle;}
-.login a{color:#444; font-size:16px;}
+.login a{color:#fff; font-size:18px;}
 .login a:hover,
 .login a:active{text-decoration:underline;}
 
@@ -38,6 +38,9 @@ h2{text-align:center; margin-bottom:50px; font-size:30px;}
 .search-group input{position:relative; float:left; border:1px solid #f99900; border-radius:5px; height:55px; width:calc(100% - 40px);}
 .smenu-btn{display:block; width:30px; height:55px; float:right; background:url(../img/icon_menu.png) no-repeat 50% 50%; background-size:25px 20px; text-indent:-9999px;}
 
+/*
+.smenu-area .bg{display:none; position:fixed; top:0; right:0; bottom:0; left:0; background:rgba(0, 0, 0, 0.2); transition:all .3s;}
+*/
 .smenu-area .bg{opacity:0; display: none; z-index:-1; position:fixed; top:0; right:0; bottom:0; left:0; background:rgba(0, 0, 0, 0.2); transition:all .3s;}
 .smenu-area > .smenu-area-wrap{position:fixed; top:0; right:-200px; bottom:0; width:200px; height:100%; background:#d83f09; transition:all .3s; z-index:10;}
 .smenu-area .user-info{position:relative; padding:20px 0;}
@@ -47,8 +50,12 @@ h2{text-align:center; margin-bottom:50px; font-size:30px;}
 .smenu-area .user-info .user-name{display:block; color:#fff; margin-top:20px; text-align:center;}
 .smenu-area .user-info .user-name span{font-size:20px; font-weight:bold;}
 
+
 .smenu-area.on .bg{opacity:1; display: block; z-index:5;}
 .smenu-area.on > .smenu-area-wrap{right:0; overflow-y:auto;}
+/*
+.smenu-area.on > .smenu-area-wrap{right:0; overflow-y:auto; z-index:200;}
+*/
 
 .smenu-area ul{padding:30px 20px;}
 .smenu-area ul li a{display:block; height:70px; font-size:16px; color:#fff; text-align:left;}
@@ -59,6 +66,30 @@ h2{text-align:center; margin-bottom:50px; font-size:30px;}
 .menu-save{background:url(../img/icon_save.png)no-repeat right -16px bottom -7px; background-size:90px 75px;}
 .menu-logout{background:url(../img/icon_logout.png)no-repeat right -10px bottom -5px; background-size:75px 75px;}
 
+/* visitPlace.html 관련 */
+/*
+.header-area .back-btn{display:block; width:20px; height:55px; background:url(../img/icon_back.png)no-repeat center; text-indent:-9999px; position:absolute; top:10px; left:10px;}
+.header-area h2{margin-bottom:0; line-height:55px;}
+.header-area .smenu-btn{position:absolute; right:10px; top:10px;}
+
+.cont-area{margin-top:75px;}
+.cont-area .cont{padding:0 20px; margin-top:40px;}
+.cont-area .cont h3{font-size:18px; color:#444; margin-bottom:30px;}
+.cont-area .cont h3 i{font-style:normal; font-size:25px; color:#444; }
+
+.btn-list{overflow:hidden; margin-top:35px; padding:0 20px;}
+.btn-list li{float:left; width:33.3%;text-align:center;}
+.btn-list li a{position:relative; display:block; text-align:center; padding-top:85px; padding-bottom:10px; background-position:center bottom 30px !important; color:#444; font-size:16px;}
+.btn-list li a:after{content:''; display:block; position:absolute; left:50%; transform:translateX(-50%); bottom:0px; width:0; height:3px; background:#ddd;transition:all .5s; }
+.btn-list li a.on:after,
+.btn-list li a:hover:after{width:80px; }
+
+.box-list{overflow:hidden; width:305px; margin:0 auto;}
+.box-list div{display:block; width:150px; height:150px; float:left; background:#ddd;}
+.box-list div + div{margin-left:5px;}
+.box-list div:nth-child(2n + 1){margin-left:0;}
+.box-list div:nth-child(n + 3){margin-top:5px;}
+ */
 
 @media all and (min-height : 600px){
 	.login{transform:translate(-50%, -55%);}
