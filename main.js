@@ -113,9 +113,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             clearMarker();
             const center = map.getCenter();
             const {data} = await axios.get('https://for-ibm.hax0r.info/managements/explore', {
-                headers: {
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZU51bWJlciI6IjAxMDMwNjMzMDcyIiwiaWF0IjoxNTkxNjk4ODA1LCJleHAiOjE1OTE5NTgwMDV9.lZ98ATwa-g8H5zftxHVjY7dbtBiQpVnJHvjfwwA8dGg'
-                },
                 params: {
                     latitude: center.getLat(),
                     longitude: center.getLng(),
