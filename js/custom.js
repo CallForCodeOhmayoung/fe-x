@@ -1,23 +1,3 @@
-/*
-$(function(){
-	$('.smenu-btn').click(function(){
-		$('.smenu-area').hasClass('on')? $('.smenu-area').removeClass('on') : $('.smenu-area').addClass('on');
-	});
-	$('.smenu-area .bg').click(function(){
-		$('.smenu-area').removeClass('on');
-	});
-});
-*/
-
-document.getElementsByClassName('.smenu-btn').onclick = function (){
-	var smenu_area = document.getElementsByClassName('.smenu-area');
-	var bg = document.getElementsByClassName('.bg');
-
-	smenu_area.hasClass('on')? smenu_area.removeClass('on') : smenu_area.addClass('on');
-	smenu_area.hasClass('on')? bg.addClass('on'): bg.removeClass('on');
-	
-};
-
 function indexView() {
 	var searchSidebarSection = document.getElementById('search-sidebar');
 	var loginSection = document.getElementById('login');
@@ -69,17 +49,38 @@ function signupView() {
 	console.log('call signupView() function');
 };
 
+var smenu_area = document.getElementsByClassName('smenu-area')[0];
+
+document.getElementsByClassName('smenu-btn')[0].onclick = function(){
+	smenu_area.classList.contains('on')? smenu_area.classList.remove('on') : smenu_area.classList.add('on');
+}
+
+smenu_area.getElementsByClassName('bg')[0].onclick = function() {
+	smenu_area.classList.remove('on');
+}
+
 document.addEventListener("DOMContentLoaded", function(){  // Start
+
+	indexView();
+
+	var myToken = "";
+	var myExpiredAt = "";
 
 	// sign up 페이지 이동: 회원가입 클릭 시
 	document.getElementById('call-signup').onclick = signupView;
 
 	// sign up 페이지 이동: 회원가입 취소 시
 	document.getElementById('signup-cancel').onclick = signinView;
-	
-	// 아래부터 http 통신 부분
-	var myToken = "";
-	var myExpiredAt = "";
+
+	// MY QR CODE 메뉴 클릭 시
+	document.getElementsByClassName('menu-qr')[0].onclick = function(){
+		if (myToken == "") {
+			signinView();
+			smenu_area.classList.remove('on');
+		} else {
+
+		}
+	};
 	
 	// sign up request
 	var signupSubmit = document.getElementById('signup-submit');
@@ -139,7 +140,18 @@ document.addEventListener("DOMContentLoaded", function(){  // Start
 
 });
 
-/*
+/* jquery: sidebar popup ver 1
+$(function(){
+	$('.smenu-btn').click(function(){
+		$('.smenu-area').hasClass('on')? $('.smenu-area').removeClass('on') : $('.smenu-area').addClass('on');
+	});
+	$('.smenu-area .bg').click(function(){
+		$('.smenu-area').removeClass('on');
+	});
+});
+*/
+
+/* jquery: sidebar popup ver 2
 $(function(){
 	$('.smenu-btn').click(function(){
 		if($('.smenu-area').hasClass('on')){
@@ -159,32 +171,3 @@ $(function(){
 	});
 });
 */
- 
- 
- $('.smenu-btn').click(function(){
-	$('.smenu-area').hasClass('on')? $('.smenu-area').removeClass('on') : $('.smenu-area').addClass('on');
-	$('.smenu-area').hasClass('on')? $('.bg').addClass('on'): $('.bg').removeClass('on');
- });
- 
- $('.smenu-area .bg').click(function(){
-	$('.smenu-area').removeClass('on');
- });
- 
- 
- 
-	
-	function NonDisplay(target){
-	   if(target == "search"){
-		  $('.bg').addClass('on');
-	   }
-	   var con = document.getElementById(target);
-	   con.style.display = "none";
-	}
- 
-	function Display(target){
-	   if(target == "search"){
-		  $('.bg').removeClass('on');
-	   }
-	   var con = document.getElementById(target);
-	   con.style.display = "block";
-	}

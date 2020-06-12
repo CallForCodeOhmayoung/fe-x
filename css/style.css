@@ -51,7 +51,7 @@ h2{text-align:center; margin-bottom:50px; font-size:30px;}
 .smenu-area .user-info .user-name span{font-size:20px; font-weight:bold;}
 
 
-.smenu-area.on .bg{opacity:1; display: block; z-index:5;}
+.smenu-area.on .bg{opacity:0.5; display: block; z-index:5;}
 .smenu-area.on > .smenu-area-wrap{right:0; overflow-y:auto;}
 /*
 .smenu-area.on > .smenu-area-wrap{right:0; overflow-y:auto; z-index:200;}
