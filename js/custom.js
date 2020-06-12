@@ -1,10 +1,14 @@
-function indexView() {
-	var searchSidebarSection = document.getElementById('search-sidebar');
-	var loginSection = document.getElementById('login');
-	var signupSection = document.getElementById('signup');
+var searchSidebarSection = document.getElementById('search-sidebar');
+var loginSection = document.getElementById('login');
+var signupSection = document.getElementById('signup');
+var qrcodeSection = document.getElementById('qrcode');
 
+var myToken = "";
+var myExpiredAt = "";
+
+function indexView() {
 	searchSidebarSection.classList.remove('pop-down');
-	loginSection.classList.add('pop-up');
+	searchSidebarSection.classList.add('pop-up');
 
 	loginSection.classList.remove('pop-up');
 	loginSection.classList.add('pop-down');
@@ -12,16 +16,15 @@ function indexView() {
 	signupSection.classList.remove('pop-up');
 	signupSection.classList.add('pop-down');
 
+	qrcodeSection.classList.remove('pop-up');
+	qrcodeSection.classList.add('pop-down');
+
 	console.log('call indexView() function');
 }
 
 function signinView() {
-	var searchSidebarSection = document.getElementById('search-sidebar');
-	var loginSection = document.getElementById('login');
-	var signupSection = document.getElementById('signup');
-
 	searchSidebarSection.classList.remove('pop-up');
-	loginSection.classList.add('pop-down');
+	searchSidebarSection.classList.add('pop-down');
 
 	loginSection.classList.remove('pop-down');
 	loginSection.classList.add('pop-up');
@@ -29,16 +32,15 @@ function signinView() {
 	signupSection.classList.remove('pop-up');
 	signupSection.classList.add('pop-down');
 
+	qrcodeSection.classList.remove('pop-up');
+	qrcodeSection.classList.add('pop-down');
+
 	console.log('call signinView() function');
 }
 
 function signupView() {
-	var searchSidebarSection = document.getElementById('search-sidebar');
-	var loginSection = document.getElementById('login');
-	var signupSection = document.getElementById('signup');
-
 	searchSidebarSection.classList.remove('pop-up');
-	loginSection.classList.add('pop-down');
+	searchSidebarSection.classList.add('pop-down');
 
 	loginSection.classList.remove('pop-up');
 	loginSection.classList.add('pop-down');
@@ -46,25 +48,48 @@ function signupView() {
 	signupSection.classList.remove('pop-down');
 	signupSection.classList.add('pop-up');
 
+	qrcodeSection.classList.remove('pop-up');
+	qrcodeSection.classList.add('pop-down');
+
 	console.log('call signupView() function');
 };
 
-var smenu_area = document.getElementsByClassName('smenu-area')[0];
+function qrcodeView() {
+	searchSidebarSection.classList.remove('pop-up');
+	searchSidebarSection.classList.add('pop-down');
+
+	loginSection.classList.remove('pop-up');
+	loginSection.classList.add('pop-down');
+
+	signupSection.classList.remove('pop-up');
+	signupSection.classList.add('pop-down');
+
+	qrcodeSection.classList.remove('pop-down');
+	qrcodeSection.classList.add('pop-up');
+
+	console.log('call qrcodeView() function');
+}
 
 document.getElementsByClassName('smenu-btn')[0].onclick = function(){
-	smenu_area.classList.contains('on')? smenu_area.classList.remove('on') : smenu_area.classList.add('on');
+	//smenu_area.classList.contains('on')? smenu_area.classList.remove('on') : smenu_area.classList.add('on');
+	var smenu_area = document.getElementsByClassName('smenu-area')[0];
+	smenu_area.classList.add('on');
 }
 
-smenu_area.getElementsByClassName('bg')[0].onclick = function() {
+// modal background 클릭 시 index 화면 보이기
+var bg = document.getElementsByClassName('bg');
+var onBgClick = function() {
+    var smenu_area = document.getElementsByClassName('smenu-area')[0];
 	smenu_area.classList.remove('on');
-}
+	indexView();
+};
+Array.from(bg).forEach(function(element) {
+	element.addEventListener('click', onBgClick);
+});
 
 document.addEventListener("DOMContentLoaded", function(){  // Start
 
 	indexView();
-
-	var myToken = "";
-	var myExpiredAt = "";
 
 	// sign up 페이지 이동: 회원가입 클릭 시
 	document.getElementById('call-signup').onclick = signupView;
@@ -76,9 +101,11 @@ document.addEventListener("DOMContentLoaded", function(){  // Start
 	document.getElementsByClassName('menu-qr')[0].onclick = function(){
 		if (myToken == "") {
 			signinView();
-			smenu_area.classList.remove('on');
+			var smenu_area = document.getElementsByClassName('smenu-area')[0];
+			smenu_area.classList.remove('on'); // sidebar 사라짐
 		} else {
-
+			retrieve();
+			qrcodeView();
 		}
 	};
 	
@@ -137,6 +164,37 @@ document.addEventListener("DOMContentLoaded", function(){  // Start
 			console.log('myExpiredAt ' + myExpiredAt);
 		});
 	};
+
+	// retrieve my information request
+	var myPhoneNumber;
+	var myQrCode;
+	function retrieve(){
+		var url = 'https://for-ibm.hax0r.info/me';
+		fetch(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'authorization': 'Bearer ' + myToken
+			}
+		}).then(function(response) {
+			if(response.ok){
+				console.log('me request success');
+				return response.json();
+			}
+			console.log('me request fail');
+		}).then(function(data){
+			myPhoneNumber = JSON.parse(JSON.stringify(data)).phoneNumber;
+			myQrCode = JSON.parse(JSON.stringify(data)).qrCode;
+			console.log('myPhoneNumber ' + myPhoneNumber);
+			console.log('myQrCode ' + myQrCode);
+			readQR();
+		});
+	}
+
+	function readQR(){
+		console.log(myQrCode);
+		document.getElementById('qrcodeImg').src = myQrCode;
+	}
 
 });
 
