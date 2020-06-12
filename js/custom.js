@@ -19,7 +19,20 @@ document.getElementsByClassName('.smenu-btn').onclick = function (){
 };
 
 function indexView() {
-	
+	var searchSidebarSection = document.getElementById('search-sidebar');
+	var loginSection = document.getElementById('login');
+	var signupSection = document.getElementById('signup');
+
+	searchSidebarSection.classList.remove('pop-down');
+	loginSection.classList.add('pop-up');
+
+	loginSection.classList.remove('pop-up');
+	loginSection.classList.add('pop-down');
+
+	signupSection.classList.remove('pop-up');
+	signupSection.classList.add('pop-down');
+
+	console.log('call indexView() function');
 }
 
 function signinView() {
@@ -58,8 +71,11 @@ function signupView() {
 
 document.addEventListener("DOMContentLoaded", function(){  // Start
 
-	// sign up 페이지 이동
+	// sign up 페이지 이동: 회원가입 클릭 시
 	document.getElementById('call-signup').onclick = signupView;
+
+	// sign up 페이지 이동: 회원가입 취소 시
+	document.getElementById('signup-cancel').onclick = signinView;
 	
 	// 아래부터 http 통신 부분
 	var myToken = "";
@@ -75,8 +91,8 @@ document.addEventListener("DOMContentLoaded", function(){  // Start
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				'phoneNumber': document.getElementById('phoneNumber-at-signup').value,
-				'password': document.getElementById('password-at-signup').value
+				phoneNumber: document.getElementById('phoneNumber-at-signup').value,
+				password: document.getElementById('password-at-signup').value
 			})
 		}).then(function(response) {
 			if(response.ok){
@@ -85,6 +101,34 @@ document.addEventListener("DOMContentLoaded", function(){  // Start
 				return response.json();
 			}
 			alert("가입 실패");
+		}).then(function(data){
+			myToken = JSON.parse(JSON.stringify(data)).token;
+			myExpiredAt = JSON.parse(JSON.stringify(data)).expiredAt;
+			console.log('myToken ' + myToken);
+			console.log('myExpiredAt ' + myExpiredAt);
+		});
+	};
+
+	// sign in request
+	var signinSubmit = document.getElementById('signin-submit');
+	signinSubmit.onclick = function (){
+		var url = 'https://for-ibm.hax0r.info/authentication/token';
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				phoneNumber: document.getElementById('phoneNumber-at-signin').value,
+				password: document.getElementById('password-at-signin').value
+			})
+		}).then(function(response) {
+			if(response.ok){
+				alert("로그인 성공");
+				indexView();
+				return response.json();
+			}
+			alert("로그인 실패");
 		}).then(function(data){
 			myToken = JSON.parse(JSON.stringify(data)).token;
 			myExpiredAt = JSON.parse(JSON.stringify(data)).expiredAt;
