@@ -18,18 +18,80 @@ document.getElementsByClassName('.smenu-btn').onclick = function (){
 	
 };
 
+function indexView() {
+	
+}
+
+function signinView() {
+	var searchSidebarSection = document.getElementById('search-sidebar');
+	var loginSection = document.getElementById('login');
+	var signupSection = document.getElementById('signup');
+
+	searchSidebarSection.classList.remove('pop-up');
+	loginSection.classList.add('pop-down');
+
+	loginSection.classList.remove('pop-down');
+	loginSection.classList.add('pop-up');
+
+	signupSection.classList.remove('pop-up');
+	signupSection.classList.add('pop-down');
+
+	console.log('call signinView() function');
+}
+
+function signupView() {
+	var searchSidebarSection = document.getElementById('search-sidebar');
+	var loginSection = document.getElementById('login');
+	var signupSection = document.getElementById('signup');
+
+	searchSidebarSection.classList.remove('pop-up');
+	loginSection.classList.add('pop-down');
+
+	loginSection.classList.remove('pop-up');
+	loginSection.classList.add('pop-down');
+
+	signupSection.classList.remove('pop-down');
+	signupSection.classList.add('pop-up');
+
+	console.log('call signupView() function');
+};
+
 document.addEventListener("DOMContentLoaded", function(){  // Start
 
-	document.getElementById('call-signup').onclick = function (){
-		var loginSection = document.getElementById('login');
-		var signupSection = document.getElementById('signup');
-
-		loginSection.classList.remove('pop-up');
-		loginSection.classList.add('pop-down');
-
-		signupSection.classList.remove('pop-down');
-		signupSection.classList.add('pop-up');
-	}
+	// sign up 페이지 이동
+	document.getElementById('call-signup').onclick = signupView;
+	
+	// 아래부터 http 통신 부분
+	var myToken = "";
+	var myExpiredAt = "";
+	
+	// sign up request
+	var signupSubmit = document.getElementById('signup-submit');
+	signupSubmit.onclick = function (){
+		var url = 'https://for-ibm.hax0r.info/authentication/sign-up';
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				'phoneNumber': document.getElementById('phoneNumber-at-signup').value,
+				'password': document.getElementById('password-at-signup').value
+			})
+		}).then(function(response) {
+			if(response.ok){
+				alert("가입 성공");
+				signinView();
+				return response.json();
+			}
+			alert("가입 실패");
+		}).then(function(data){
+			myToken = JSON.parse(JSON.stringify(data)).token;
+			myExpiredAt = JSON.parse(JSON.stringify(data)).expiredAt;
+			console.log('myToken ' + myToken);
+			console.log('myExpiredAt ' + myExpiredAt);
+		});
+	};
 
 });
 
@@ -51,41 +113,6 @@ $(function(){
 		$('.smenu-area .bg').stop().fadeOut(300);
 		$('.btn-list a').css('zIndex', 0);
 	});
-});
-*/
-/*
-document.addEventListener("DOMContentLoaded", function(){  // Start
-	var myToken = "";
-    var myExpiredAt = "";
-
-	// Sign Up
-	var signup = document.getElementById('signup');
-	signup.onclick = function (){
-		console.log(document.getElementById('signup').value);
-		var url = 'https://for-ibm.hax0r.info/authentication/sign-up';
-		fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: {
-				'phoneNumber': document.getElementById('phoneNumber').value,
-				'password': document.getElementById('password').value
-			}
-		}).then(function(response) {
-			if(response.ok){
-				alert("가입 성공");
-				return response.json();
-			}
-			console.log(response.json);
-			alert("가입 실패");
-		}).then(function(data){
-			console.log(data);
-			myToken = JSON.parse(JSON.stringify(data)).token;
-			expiredAt = JSON.parse(JSON.stringify(data)).expiredAt;
-			document.getElementById('lblFrom').innerHTML = myToken;
-		});
-	};
 });
 */
  
